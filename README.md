@@ -1,8 +1,10 @@
 # Dom
 
-A lightweight and modern DOM manipulation library designed to make building web applications easier and more efficient
+A lightweight and modern DOM manipulation library designed to make building web
+applications easier and more efficient
 
-It provides a simple API with a similar syntax to jQuery allowing you to create, manipulate, and interact with web pages with ease
+It provides a simple API with a similar syntax to jQuery allowing you to create,
+manipulate, and interact with web pages with ease
 
 ## Installation
 
