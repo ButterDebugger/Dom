@@ -1,60 +1,17 @@
-# 🦕 Deno + JSR Template
+# Dom
 
-A starter template for a new Deno and JSR project.
+A lightweight and modern DOM manipulation library designed to make building web applications easier and more efficient
 
-## Usage
+It provides a simple API with a similar syntax to jQuery allowing you to create, manipulate, and interact with web pages with ease
 
-Click
-[here](https://github.com/new?template_name=deno-jsr-template&template_owner=butterdebugger)
-to create a new repository using this starter template.
+## Installation
 
-Run a single test using Deno:
+For Browsers:
 
-```console
-$ deno task test
+```javascript
+import {} from "https://esm.sh/jsr/@debutter/dom@VERSION";
 ```
 
-Run automatic tests using Deno:
+## Contributing
 
-```console
-$ deno task dev
-```
-
-Bundles the source code to vanilla JavaScript:
-
-```console
-$ deno task bundle
-```
-
-Lints and formats the source code:
-
-```console
-$ deno task fix
-```
-
-Run automatic bundling and boot a server for web tests:
-
-```console
-$ deno task web
-```
-
-Lints, formats, and tests your code before publishing it to JSR:
-
-```console
-$ deno task publish
-```
-
-## Checklist
-
-- [ ] Replace `@debutter/deno-jsr-template` in `deno.json` with the name of your
-      JSR package
-- [ ] Change this `README.md` to reflect your project
-- [ ] Add a LICENSE and update the `license` field in `deno.json`
-- [ ] Write code and tests
-- [ ] Add JSDocs to all of your exported declarations
-- [ ] Commit and deploy to production with `deno task publish`
-- [ ] Link GitHub repository on JSR
-
-## License
-
-None at the moment. Enjoy!
+Contributions are welcome! Please feel free to submit a Pull Request.
