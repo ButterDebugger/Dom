@@ -7,15 +7,24 @@ import type { DomCommon, DomElements, DomLike } from "./types.ts";
 export const $: DomCommon = {
     get window(): DomLike {
         return {
-            on: (events: string, callback: EventListener) => {
+            on: <K extends Event>(
+                events: string,
+                callback: (event: K) => void,
+            ) => {
                 this.on(window, events, callback);
                 return this;
             },
-            once: (events: string, callback: EventListener) => {
+            once: <K extends Event>(
+                events: string,
+                callback: (event: K) => void,
+            ) => {
                 this.once(window, events, callback);
                 return this;
             },
-            off: (events: string, callback: EventListener) => {
+            off: <K extends Event>(
+                events: string,
+                callback: (event: K) => void,
+            ) => {
                 this.off(window, events, callback);
                 return this;
             },
@@ -23,15 +32,24 @@ export const $: DomCommon = {
     },
     get document(): DomLike {
         return {
-            on: (events: string, callback: EventListener) => {
+            on: <K extends Event>(
+                events: string,
+                callback: (event: K) => void,
+            ) => {
                 this.on(document, events, callback);
                 return this;
             },
-            once: (events: string, callback: EventListener) => {
+            once: <K extends Event>(
+                events: string,
+                callback: (event: K) => void,
+            ) => {
                 this.once(document, events, callback);
                 return this;
             },
-            off: (events: string, callback: EventListener) => {
+            off: <K extends Event>(
+                events: string,
+                callback: (event: K) => void,
+            ) => {
                 this.off(document, events, callback);
                 return this;
             },
@@ -45,31 +63,33 @@ export const $: DomCommon = {
     },
 
     // Event listener functions
-    on(
+    on<K extends Event>(
         target: Document | DomElements | (Window & typeof globalThis),
         events: string,
-        callback: EventListener,
+        callback: (event: K) => void,
     ): void {
         for (const event of events.split(" ")) {
-            target.addEventListener(event, callback);
+            target.addEventListener(event, callback as EventListener);
         }
     },
-    once(
+    once<K extends Event>(
         target: Document | DomElements | (Window & typeof globalThis),
         events: string,
-        callback: EventListener,
+        callback: (event: K) => void,
     ): void {
         for (const event of events.split(" ")) {
-            target.addEventListener(event, callback, { once: true });
+            target.addEventListener(event, callback as EventListener, {
+                once: true,
+            });
         }
     },
-    off(
+    off<K extends Event>(
         target: Document | DomElements | (Window & typeof globalThis),
         events: string,
-        callback: EventListener,
+        callback: (event: K) => void,
     ): void {
         for (const event of events.split(" ")) {
-            target.removeEventListener(event, callback);
+            target.removeEventListener(event, callback as EventListener);
         }
     },
 };

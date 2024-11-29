@@ -2,13 +2,13 @@ import { collection, type DomCollection } from "./collection.ts";
 import type { DomComponent } from "./component.ts";
 import { $ } from "./global.ts";
 import { parseHTML } from "./parser.ts";
-import type { DomElements, DomParsable } from "./types.ts";
+import type { DomElements, DomLike, DomParsable } from "./types.ts";
 import { isComponent, isContext, isDomParsable, isHTML } from "./utils.ts";
 
 /**
  * Dom wrapper for a single element
  */
-export class DomContext {
+export class DomContext implements DomLike {
     #ele: HTMLElement | Element;
 
     constructor(element: HTMLElement | Element) {
@@ -535,7 +535,10 @@ export class DomContext {
      * @param callback A function that will be called when the event occurs
      * @returns A reference to itself
      */
-    on(events: string, callback: EventListener): DomContext {
+    on<K extends Event>(
+        events: string,
+        callback: (event: K) => void,
+    ): DomContext {
         $.on(this.#ele, events, callback);
         return this;
     }
@@ -546,7 +549,10 @@ export class DomContext {
      * @param callback A function that will be called for each event once the event occurs
      * @returns A reference to itself
      */
-    once(events: string, callback: EventListener): DomContext {
+    once<K extends Event>(
+        events: string,
+        callback: (event: K) => void,
+    ): DomContext {
         $.once(this.#ele, events, callback);
         return this;
     }
@@ -557,7 +563,10 @@ export class DomContext {
      * @param callback The function that was used to register the event
      * @returns A reference to itself
      */
-    off(events: string, callback: EventListener): DomContext {
+    off<K extends Event>(
+        events: string,
+        callback: (event: K) => void,
+    ): DomContext {
         $.off(this.#ele, events, callback);
         return this;
     }

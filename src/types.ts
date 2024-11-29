@@ -1,9 +1,18 @@
 import type { DomContext } from "./context.ts";
 
 export interface DomLike {
-    on: (events: string, callback: EventListener) => DomLike;
-    once: (events: string, callback: EventListener) => DomLike;
-    off: (events: string, callback: EventListener) => DomLike;
+    on: <K extends Event>(
+        events: string,
+        callback: (event: K) => void,
+    ) => DomLike;
+    once: <K extends Event>(
+        events: string,
+        callback: (event: K) => void,
+    ) => DomLike;
+    off: <K extends Event>(
+        events: string,
+        callback: (event: K) => void,
+    ) => DomLike;
 }
 
 export interface DomCommon {
@@ -13,20 +22,20 @@ export interface DomCommon {
     get head(): DomContext | null;
     get body(): DomContext | null;
 
-    on(
+    on<K extends Event>(
         target: Document | DomElements | (Window & typeof globalThis),
         events: string,
-        callback: EventListener,
+        callback: (event: K) => void,
     ): void;
-    once(
+    once<K extends Event>(
         target: Document | DomElements | (Window & typeof globalThis),
         events: string,
-        callback: EventListener,
+        callback: (event: K) => void,
     ): void;
-    off(
+    off<K extends Event>(
         target: Document | DomElements | (Window & typeof globalThis),
         events: string,
-        callback: EventListener,
+        callback: (event: K) => void,
     ): void;
 }
 
