@@ -1,7 +1,7 @@
 {
-    "name": "@debutter/deno-jsr-template",
+    "name": "@debutter/dom",
     "version": "0.1.0",
-    "license": "UNLICENSED",
+    "license": "MIT",
     "tasks": {
         "test": "deno test -A",
         "dev": "deno test -A --watch",
