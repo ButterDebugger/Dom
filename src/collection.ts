@@ -9,7 +9,7 @@ import { isDomParsable, isHTML } from "./utils.ts";
  */
 export class DomCollection extends Array<DomContext> {
     constructor(...args: DomParsable[]) {
-        const elements = [];
+        const elements: DomContext[] = [];
 
         for (const item of args) {
             const ctx = dom(item);
@@ -122,8 +122,10 @@ export class DomCollection extends Array<DomContext> {
             | string
             | null
             | undefined
-            | ((oldValue: string | null, index: number) => string | null) =
-                undefined,
+            | ((
+                oldValue: string | null,
+                index: number,
+            ) => string | null) = undefined,
     ): DomCollection | Record<string, string>[] | (string | null)[] {
         // Return value
         if (typeof name === "undefined" && typeof value === "undefined") {

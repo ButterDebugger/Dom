@@ -68,7 +68,7 @@ export class DomComponent {
             const $slotEle = $component.find("slot", true);
 
             if ($slotEle !== null) {
-                const children = [];
+                const children: DomContext[] = [];
 
                 if (Array.isArray(slot) || slot instanceof HTMLCollection) {
                     for (const slotItem of slot) {

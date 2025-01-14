@@ -180,8 +180,10 @@ export class DomContext implements DomLike {
      */
     prop(
         name: string,
-        value: undefined | unknown | ((oldValue: unknown) => unknown) =
-            undefined,
+        value:
+            | undefined
+            | unknown
+            | ((oldValue: unknown) => unknown) = undefined,
     ): DomContext | unknown {
         if (typeof name === "undefined") {
             throw new TypeError("Name must be a string");
@@ -418,7 +420,7 @@ export class DomContext implements DomLike {
      */
     insert(where: InsertPosition, ...contents: DomParsable[]): DomContext {
         for (const content of contents.flat()) {
-            let node = null;
+            let node: Element | null = null;
 
             if (typeof content === "string") {
                 node = dom(content)?.element ?? null;
