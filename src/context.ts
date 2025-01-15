@@ -2,20 +2,20 @@ import { collection, type DomCollection } from "./collection.ts";
 import type { DomComponent } from "./component.ts";
 import { $ } from "./global.ts";
 import { parseHTML } from "./parser.ts";
-import type { DomElements, DomLike, DomParsable } from "./types.ts";
+import type { DomLike, DomParsable } from "./types.ts";
 import { isComponent, isContext, isDomParsable, isHTML } from "./utils.ts";
 
 /**
  * Dom wrapper for a single element
  */
 export class DomContext implements DomLike {
-    #ele: HTMLElement | Element;
+    #ele: Element;
 
-    constructor(element: HTMLElement | Element) {
+    constructor(element: Element) {
         this.#ele = element;
     }
 
-    get element(): HTMLElement | Element {
+    get element(): Element {
         return this.#ele;
     }
 
@@ -633,9 +633,8 @@ export class DomContext implements DomLike {
 }
 
 export function dom(input: string): DomContext | null;
-export function dom(input: HTMLElement | Element): DomContext;
+export function dom(input: Element): DomContext;
 export function dom(input: DomContext): DomContext;
-export function dom(input: DomElements): DomContext;
 export function dom(input: DomParsable): DomContext;
 export function dom(
     input: string | HTMLElement | Element | DomContext,

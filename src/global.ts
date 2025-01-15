@@ -1,5 +1,5 @@
 import { dom, type DomContext } from "./context.ts";
-import type { DomCommon, DomElements, DomLike } from "./types.ts";
+import type { DomCommon, DomLike } from "./types.ts";
 
 /**
  * Dom-like wrapper for the predefined objects like window and document
@@ -64,7 +64,7 @@ export const $: DomCommon = {
 
     // Event listener functions
     on<K extends Event>(
-        target: Document | DomElements | (Window & typeof globalThis),
+        target: Document | Element | (Window & typeof globalThis),
         events: string,
         callback: (event: K) => void,
     ): void {
@@ -73,7 +73,7 @@ export const $: DomCommon = {
         }
     },
     once<K extends Event>(
-        target: Document | DomElements | (Window & typeof globalThis),
+        target: Document | Element | (Window & typeof globalThis),
         events: string,
         callback: (event: K) => void,
     ): void {
@@ -84,7 +84,7 @@ export const $: DomCommon = {
         }
     },
     off<K extends Event>(
-        target: Document | DomElements | (Window & typeof globalThis),
+        target: Document | Element | (Window & typeof globalThis),
         events: string,
         callback: (event: K) => void,
     ): void {
