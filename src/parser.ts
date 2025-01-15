@@ -8,8 +8,3 @@ export function parseHTML(input: string): Element {
     temp.innerHTML = input;
     return temp.children[0];
 }
-
-// export function templateHTML(
-// 	strings: TemplateStringsArray,
-// 	...values: unknown[]
-// ): void {}
