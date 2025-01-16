@@ -1,6 +1,6 @@
 import type { DomComponent } from "./component.ts";
 import { dom, type DomContext } from "./context.ts";
-import { parseHTML } from "./parser.ts";
+import { parse } from "./parser.ts";
 import type { DomParsable } from "./types.ts";
 import { isDomParsable, isHTML } from "./utils.ts";
 
@@ -570,7 +570,7 @@ export function collection(...input: DomParsable[]): DomCollection {
     for (const item of input) {
         if (typeof item === "string") {
             if (isHTML(item)) {
-                const $ele = dom(parseHTML(item));
+                const $ele = dom(parse(item));
                 if ($ele === null) continue;
 
                 items.push($ele);

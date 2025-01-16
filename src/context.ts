@@ -1,7 +1,7 @@
 import { collection, type DomCollection } from "./collection.ts";
 import type { DomComponent } from "./component.ts";
 import { $ } from "./global.ts";
-import { parseHTML } from "./parser.ts";
+import { parse } from "./parser.ts";
 import type { DomLike, DomParsable } from "./types.ts";
 import { isComponent, isContext, isDomParsable, isHTML } from "./utils.ts";
 
@@ -642,7 +642,7 @@ export function dom(
     if (typeof input === "string") {
         // Parse input as HTML
         if (isHTML(input)) {
-            return new DomContext(parseHTML(input));
+            return new DomContext(parse(input));
         }
 
         // Query for a matching element
