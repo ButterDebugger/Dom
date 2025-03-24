@@ -19,6 +19,14 @@ export class DomContext implements DomLike {
         return this.#ele;
     }
 
+    get children(): DomCollection {
+        return collection(...this.#ele.children);
+    }
+
+    get parent(): DomContext | null {
+        return dom(<Element> this.#ele.parentElement);
+    }
+
     /**
      * Clones the current element
      * @param deep Whether to clone the element and all its children

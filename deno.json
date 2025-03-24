@@ -1,6 +1,6 @@
 {
     "name": "@debutter/dom",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "license": "MIT",
     "tasks": {
         "dev": "deno run -A bundle.ts && deno serve --port 7000 -A server.ts & deno test -A --parallel --trace-leaks",
