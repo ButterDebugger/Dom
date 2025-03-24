@@ -3,11 +3,11 @@
     "version": "0.2.1",
     "license": "MIT",
     "tasks": {
-        "dev": "deno run -A bundle.ts && deno serve --port 7000 -A server.ts & deno test -A --parallel --trace-leaks",
+        "dev": "deno task web & deno test -A --parallel --trace-leaks",
         "bundle": "deno run -A bundle.ts",
         "fix": "deno lint && deno fmt && deno publish --allow-dirty --dry-run",
         "web": "deno run -A bundle.ts --watch & deno serve --port 7000 -A server.ts",
-        "publish": "deno task fix && deno task test && deno publish"
+        "publish": "deno task fix && deno publish"
     },
     "imports": {
         "@astral/astral": "jsr:@astral/astral@^0.5.2",
