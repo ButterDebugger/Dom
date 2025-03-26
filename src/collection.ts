@@ -1,4 +1,3 @@
-import type { DomComponent } from "./component.ts";
 import { dom, type DomContext } from "./context.ts";
 import { parse } from "./parser.ts";
 import type { DomParsable } from "./types.ts";
@@ -113,9 +112,6 @@ export class DomCollection extends Array<DomContext> {
      * @returns An object containing all attributes
      */
     attr(): Record<string, string>[];
-    /**
-     * Manipulates the elements attributes
-     */
     attr(
         name: string | undefined = undefined,
         value:
@@ -178,9 +174,6 @@ export class DomCollection extends Array<DomContext> {
      * @returns A reference to itself
      */
     prop(name: string, value: (oldValue: unknown) => unknown): DomCollection;
-    /**
-     * Manipulates every elements property
-     */
     prop(
         name: string,
         value:
@@ -244,9 +237,6 @@ export class DomCollection extends Array<DomContext> {
         name: string,
         value: (oldValue: string, index: number) => string,
     ): DomCollection;
-    /**
-     * Manipulates every elements style
-     */
     style(
         name: string,
         value:
@@ -298,9 +288,6 @@ export class DomCollection extends Array<DomContext> {
         name: string,
         value: (oldValue: string, index: number) => string,
     ): DomCollection;
-    /**
-     * Manipulates every elements css
-     */
     css(
         name: string,
         value:
@@ -339,9 +326,6 @@ export class DomCollection extends Array<DomContext> {
      * @param value The text to set
      */
     text(value: string): DomCollection;
-    /**
-     * Manipulates the inner text of each element
-     */
     text(value: string | undefined = undefined): DomCollection | string[] {
         // Return value
         if (typeof value === "undefined") {
@@ -364,9 +348,6 @@ export class DomCollection extends Array<DomContext> {
      * @param value The html to set
      */
     html(value: string): DomCollection;
-    /**
-     * Manipulates the inner html of each element
-     */
     html(value: string | undefined = undefined): DomCollection | string[] {
         // Return value
         if (typeof value === "undefined") {
@@ -533,18 +514,6 @@ export class DomCollection extends Array<DomContext> {
     }
 
     /**
-     * Applies one or more components to every element
-     * @param components List of one or more components to apply
-     * @returns A reference to itself
-     */
-    use(...components: DomComponent[]): DomCollection {
-        for (const $ele of this) {
-            $ele.use(...components);
-        }
-        return this;
-    }
-
-    /**
      * Removes every element from the collection
      * @returns A reference to itself
      */
@@ -564,6 +533,11 @@ export class DomCollection extends Array<DomContext> {
     }
 }
 
+/**
+ * Creates a new DomCollection from a list of items
+ * @param input A list of parsable items to create the collection from
+ * @returns A new DomCollection containing the parsed elements
+ */
 export function collection(...input: DomParsable[]): DomCollection {
     const items: DomContext[] = [];
 

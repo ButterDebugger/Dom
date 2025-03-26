@@ -1,5 +1,5 @@
 import { DomCollection } from "./collection.ts";
-import { DomBuilder, DomComponent } from "./component.ts";
+import { DomElement } from "./component.ts";
 import { DomContext } from "./context.ts";
 import type { DomParsable } from "./types.ts";
 
@@ -40,21 +40,12 @@ export function isCollection(input: unknown): input is DomCollection {
 }
 
 /**
- * Checks if the given input is a DomBuilder
+ * Checks if the given input is a DomElement or component
  * @param input The input to check
- * @returns Whether the input is a DomBuilder
+ * @returns Whether the input is a DomElement or component
  */
-export function isBuilder(input: unknown): input is DomBuilder {
-    return input instanceof DomBuilder;
-}
-
-/**
- * Checks if the given input is a DomComponent
- * @param input The input to check
- * @returns Whether the input is a DomComponent
- */
-export function isComponent(input: unknown): input is DomComponent {
-    return input instanceof DomComponent;
+export function isComponent(input: unknown): input is DomElement {
+    return input instanceof DomElement;
 }
 
 /**

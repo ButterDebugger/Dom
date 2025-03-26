@@ -1,9 +1,8 @@
 import { collection, type DomCollection } from "./collection.ts";
-import type { DomComponent } from "./component.ts";
 import { $ } from "./global.ts";
 import { parse } from "./parser.ts";
 import type { DomLike, DomParsable } from "./types.ts";
-import { isComponent, isContext, isDomParsable, isHTML } from "./utils.ts";
+import { isContext, isDomParsable, isHTML } from "./utils.ts";
 
 /**
  * Dom wrapper for a single element
@@ -15,14 +14,23 @@ export class DomContext implements DomLike {
         this.#ele = element;
     }
 
+    /**
+     * The wrapped element
+     */
     get element(): Element {
         return this.#ele;
     }
 
+    /**
+     * A collection of the elements children
+     */
     get children(): DomCollection {
         return collection(...this.#ele.children);
     }
 
+    /**
+     * The parent element
+     */
     get parent(): DomContext | null {
         return dom(<Element> this.#ele.parentElement);
     }
@@ -114,9 +122,6 @@ export class DomContext implements DomLike {
      * @returns An object containing all attributes
      */
     attr(): Record<string, string>;
-    /**
-     * Manipulates the elements attributes
-     */
     attr(
         name: string | undefined = undefined,
         value:
@@ -183,9 +188,6 @@ export class DomContext implements DomLike {
      * @returns A reference to itself
      */
     prop(name: string, value: (oldValue: unknown) => unknown): DomContext;
-    /**
-     * Manipulates the elements property
-     */
     prop(
         name: string,
         value:
@@ -248,9 +250,6 @@ export class DomContext implements DomLike {
      * @returns A reference to itself
      */
     style(name: string, value: (oldValue: string) => string): DomContext;
-    /**
-     * Manipulates the elements style
-     */
     style(
         name: string,
         value: undefined | string | ((oldValue: string) => string) = undefined,
@@ -298,9 +297,6 @@ export class DomContext implements DomLike {
      * @returns A reference to itself
      */
     css(name: string, value: (oldValue: string) => string): DomContext;
-    /**
-     * Manipulates the elements css
-     */
     css(
         name: string,
         value: undefined | string | ((oldValue: string) => string) = undefined,
@@ -342,9 +338,6 @@ export class DomContext implements DomLike {
      * @returns A reference to itself
      */
     text(value: string): DomContext;
-    /**
-     * Gets or sets the inner text of the element
-     */
     text(value: string | undefined = undefined): string | DomContext {
         if (!(this.#ele instanceof HTMLElement)) {
             throw new TypeError("Element is not an HTMLElement");
@@ -371,9 +364,6 @@ export class DomContext implements DomLike {
      * @returns A reference to itself
      */
     html(value: string): DomContext;
-    /**
-     * Gets or sets the inner html of the element
-     */
     html(value: string | undefined = undefined): string | DomContext {
         // Return value
         if (typeof value === "undefined") {
@@ -582,50 +572,6 @@ export class DomContext implements DomLike {
     }
 
     /**
-     * Applies one or more components to the element
-     * @param components List of one or more components to apply
-     * @returns A reference to itself
-     */
-    use(...components: DomComponent[]): DomContext {
-        let changed: boolean;
-
-        do {
-            changed = false;
-
-            for (const component of components) {
-                if (!isComponent(component)) {
-                    throw new TypeError("Component is not a component.");
-                }
-
-                const $prebuild = this.findAll(component.selector, true);
-
-                $prebuild.forEach(($item, index) => {
-                    // Get the component's options
-                    const options = $item.attr();
-
-                    // Build the component
-                    const isRootLevel = this.#ele === $item.element;
-                    const isTopLevel = $prebuild.includes($item);
-
-                    const $component = component.create(
-                        options,
-                        $item.element.children,
-                    );
-                    $item.replaceWith($component);
-
-                    if (isTopLevel) $prebuild[index] = $component;
-                    if (isRootLevel) this.#ele = $item.element;
-
-                    // Mark the change in the building process
-                    changed = true;
-                });
-            }
-        } while (changed);
-
-        return this;
-    }
-
-    /**
      * Removes the element
      */
     remove(): void {
@@ -640,9 +586,29 @@ export class DomContext implements DomLike {
     }
 }
 
+/**
+ * Creates a new DomContext from a string
+ * @param input An HTML string or query section
+ * @returns A new DomContext or null if the input is invalid
+ */
 export function dom(input: string): DomContext | null;
+/**
+ * Creates a new DomContext from an existing element
+ * @param input The element to be wrapped
+ * @returns A new DomContext
+ */
 export function dom(input: Element): DomContext;
+/**
+ * Creates a duplicate of the given DomContext
+ * @param input The DomContext to duplicate
+ * @returns A new DomContext wrapping the same element
+ */
 export function dom(input: DomContext): DomContext;
+/**
+ * Creates a new DomContext from the given input
+ * @param input The input to parse
+ * @returns A new DomContext
+ */
 export function dom(input: DomParsable): DomContext;
 export function dom(
     input: string | HTMLElement | Element | DomContext,

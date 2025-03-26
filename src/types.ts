@@ -39,4 +39,7 @@ export interface DomCommon {
     ): void;
 }
 
+/**
+ * Types that can be parsed into a DomContext
+ */
 export type DomParsable = string | Element | DomContext;

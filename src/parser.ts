@@ -10,6 +10,28 @@ export function parse(input: string): Element {
 }
 
 /**
+ * Creates a CSS string using a template literal
+ *
+ * Mainly used to trigger syntax highlighting in most IDEs,
+ * doesn't have any actual functionality beyond that at the moment
+ * @param strings The split template literal strings
+ * @param values The values of the template literal
+ * @returns A concatenated string of the template literal
+ */
+export function css(
+    strings: TemplateStringsArray,
+    ...values: unknown[]
+): string {
+    let str = "";
+
+    for (let i = 0; i < values.length; i++) {
+        str += strings[i] + String(values[i]);
+    }
+
+    return str + strings[strings.length - 1];
+}
+
+/**
  * Creates an element using a template literal
  * @param strings The split template literal strings
  * @param values The values of the template literal
