@@ -73,6 +73,6 @@ export abstract class DomElement extends HTMLElement {
             this.shadowRoot.appendChild(style);
         }
 
-        this.shadowRoot.appendChild(dom(this.template()).clone().element);
+        this.shadowRoot.appendChild(dom(this.template()).element);
     }
 }

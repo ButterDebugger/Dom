@@ -1,6 +1,6 @@
 {
     "name": "@debutter/dom",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "license": "MIT",
     "tasks": {
         "dev": "deno task web & deno test -A --parallel --trace-leaks",
