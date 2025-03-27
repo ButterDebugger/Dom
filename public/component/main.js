@@ -13,6 +13,14 @@ component(
 			}
 		`;
 
+		constructor() {
+			super();
+
+			this.mountEffect(() => {
+				console.log("mounted");
+			});
+		}
+
 		template() {
 			return html`
 				<div>
