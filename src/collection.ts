@@ -1,12 +1,12 @@
 import { dom, type DomContext } from "./context.ts";
 import { parse } from "./parser.ts";
-import type { DomParsable } from "./types.ts";
+import type { DomLike, DomParsable } from "./types.ts";
 import { isDomParsable, isHTML } from "./utils.ts";
 
 /**
  * Dom wrapper for a list of elements
  */
-export class DomCollection extends Array<DomContext> {
+export class DomCollection extends Array<DomContext> implements DomLike {
     constructor(...args: DomParsable[]) {
         const elements: DomContext[] = [];
 
@@ -419,12 +419,42 @@ export class DomCollection extends Array<DomContext> {
     }
 
     /**
+     * Appends every element inside this collection to the given target
+     * @param target The target to append to
+     * @returns A reference to the target
+     */
+    appendTo(target: DomParsable): DomContext {
+        const other = dom(target);
+
+        for (const $ele of this) {
+            other.insert("beforeend", $ele);
+        }
+
+        return other;
+    }
+
+    /**
      * Prepends the given content to every element
      * @param children The content to prepend, can be a list of anything dom parsable
      * @returns A reference to itself
      */
     prepend(...children: DomParsable[]): DomCollection {
         return this.insert("afterbegin", ...children);
+    }
+
+    /**
+     * Prepends every element inside this collection to the given target
+     * @param target The target to prepend to
+     * @returns A reference to the target
+     */
+    prependTo(target: DomParsable): DomContext {
+        const other = dom(target);
+
+        for (const $ele of this) {
+            other.insert("afterbegin", $ele);
+        }
+
+        return other;
     }
 
     /**
@@ -475,40 +505,64 @@ export class DomCollection extends Array<DomContext> {
     }
 
     /**
-     * Appends an event listener to one or more events for every element
-     * @param events A string separated by spaces containing the events to listen for
+     * Appends an event listener to every element
+     * @param event The event type to listen for
      * @param callback A function that will be called when the event occurs
      * @returns A reference to itself
      */
-    on(events: string, callback: EventListener): DomCollection {
+    on<K extends keyof GlobalEventHandlersEventMap>(
+        event: K,
+        callback: (event: GlobalEventHandlersEventMap[K]) => void,
+    ): DomCollection;
+    on<E extends Event>(
+        event: string,
+        callback: (event: E) => void,
+    ): DomCollection;
+    on(event: string, callback: EventListener): DomCollection {
         for (const $ele of this) {
-            $ele.on(events, callback);
+            $ele.on(event, callback);
         }
         return this;
     }
 
     /**
-     * Appends an event listener that only occurs once to one or more events for every element
-     * @param events A string separated by spaces containing the events to listen for
+     * Appends an event listener that only occurs once to every element
+     * @param event The event type to listen for
      * @param callback A function that will be called for each event once the event occurs
      * @returns A reference to itself
      */
-    once(events: string, callback: EventListener): DomCollection {
+    once<K extends keyof GlobalEventHandlersEventMap>(
+        event: K,
+        callback: (event: GlobalEventHandlersEventMap[K]) => void,
+    ): DomCollection;
+    once<E extends Event>(
+        event: string,
+        callback: (event: E) => void,
+    ): DomCollection;
+    once(event: string, callback: EventListener): DomCollection {
         for (const $ele of this) {
-            $ele.once(events, callback);
+            $ele.once(event, callback);
         }
         return this;
     }
 
     /**
-     * Removes an event listener from one or more events for every element
-     * @param events A string separated by spaces containing the events to remove
+     * Removes an event listener from every element
+     * @param event The event type to remove the listener from
      * @param callback The function that was used to register the event
      * @returns A reference to itself
      */
-    off(events: string, callback: EventListener): DomCollection {
+    off<K extends keyof GlobalEventHandlersEventMap>(
+        event: K,
+        callback: (event: GlobalEventHandlersEventMap[K]) => void,
+    ): DomCollection;
+    off<E extends Event>(
+        event: string,
+        callback: (event: E) => void,
+    ): DomCollection;
+    off(event: string, callback: EventListener): DomCollection {
         for (const $ele of this) {
-            $ele.off(events, callback);
+            $ele.off(event, callback);
         }
         return this;
     }

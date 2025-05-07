@@ -1,5 +1,5 @@
 import { collection, type DomCollection } from "./collection.ts";
-import { $ } from "./global.ts";
+import { $$ } from "./global.ts";
 import { parse } from "./parser.ts";
 import type { DomLike, DomParsable } from "./types.ts";
 import { isContext, isDomParsable, isHTML } from "./utils.ts";
@@ -385,12 +385,38 @@ export class DomContext implements DomLike {
     }
 
     /**
+     * Appends itself to the given target
+     * @param target The element to append to
+     * @returns A reference to the target
+     */
+    appendTo(target: DomParsable): DomContext {
+        const other = dom(target);
+
+        other.insert("beforeend", this);
+
+        return other;
+    }
+
+    /**
      * Prepends the given content to the element
      * @param children The content to prepend, can be a list of anything dom parsable
      * @returns A reference to itself
      */
     prepend(...children: DomParsable[]): DomContext {
         return this.insert("afterbegin", ...children);
+    }
+
+    /**
+     * Prepends itself to the given target
+     * @param target The element to prepend to
+     * @returns A reference to the target
+     */
+    prependTo(target: DomParsable): DomContext {
+        const other = dom(target);
+
+        other.insert("afterbegin", this);
+
+        return other;
     }
 
     /**
@@ -530,44 +556,59 @@ export class DomContext implements DomLike {
     }
 
     /**
-     * Appends an event listener to one or more events of the element
-     * @param events A string separated by spaces containing the events to listen for
+     * Appends an event listener to the element
+     * @param event The event type to listen for
      * @param callback A function that will be called when the event occurs
      * @returns A reference to itself
      */
-    on<K extends Event>(
-        events: string,
-        callback: (event: K) => void,
-    ): DomContext {
-        $.on(this.#ele, events, callback);
+    on<K extends keyof GlobalEventHandlersEventMap>(
+        event: K,
+        callback: (event: GlobalEventHandlersEventMap[K]) => void,
+    ): DomContext;
+    on<E extends Event>(
+        event: string,
+        callback: (event: E) => void,
+    ): DomContext;
+    on(event: string, callback: EventListener): DomContext {
+        $$.on(this.#ele, event, callback);
         return this;
     }
 
     /**
-     * Appends an event listener that only occurs once to one or more events of the element
-     * @param events A string separated by spaces containing the events to listen for
+     * Appends an event listener that only occurs once to the element
+     * @param event The event type to listen for
      * @param callback A function that will be called for each event once the event occurs
      * @returns A reference to itself
      */
-    once<K extends Event>(
-        events: string,
-        callback: (event: K) => void,
-    ): DomContext {
-        $.once(this.#ele, events, callback);
+    once<K extends keyof GlobalEventHandlersEventMap>(
+        event: K,
+        callback: (event: GlobalEventHandlersEventMap[K]) => void,
+    ): DomContext;
+    once<E extends Event>(
+        event: string,
+        callback: (event: E) => void,
+    ): DomContext;
+    once(event: string, callback: EventListener): DomContext {
+        $$.once(this.#ele, event, callback);
         return this;
     }
 
     /**
-     * Removes an event listener from one or more events of the element
-     * @param events A string separated by spaces containing the events to remove
+     * Removes an event listener from the element
+     * @param event The event type to remove the listener from
      * @param callback The function that was used to register the event
      * @returns A reference to itself
      */
-    off<K extends Event>(
-        events: string,
-        callback: (event: K) => void,
-    ): DomContext {
-        $.off(this.#ele, events, callback);
+    off<K extends keyof GlobalEventHandlersEventMap>(
+        event: K,
+        callback: (event: GlobalEventHandlersEventMap[K]) => void,
+    ): DomContext;
+    off<E extends Event>(
+        event: string,
+        callback: (event: E) => void,
+    ): DomContext;
+    off(event: string, callback: EventListener): DomContext {
+        $$.off(this.#ele, event, callback);
         return this;
     }
 

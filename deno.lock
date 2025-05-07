@@ -1,5 +1,5 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "jsr:@astral/astral@*": "0.5.2",
     "jsr:@astral/astral@~0.5.2": "0.5.2",
@@ -8,6 +8,7 @@
     "jsr:@std/assert@1": "1.0.7",
     "jsr:@std/assert@^1.0.10": "1.0.11",
     "jsr:@std/async@1": "1.0.10",
+    "jsr:@std/async@^1.0.9": "1.0.10",
     "jsr:@std/bytes@^1.0.2": "1.0.5",
     "jsr:@std/data-structures@^1.0.6": "1.0.6",
     "jsr:@std/encoding@^1.0.5": "1.0.7",
@@ -27,7 +28,7 @@
       "integrity": "dc4b7e0ea5d8186fcd9e33e2c54e62913d7eb99d5a2d4f987b1c5399d8e295de",
       "dependencies": [
         "jsr:@deno-library/progress",
-        "jsr:@std/async",
+        "jsr:@std/async@1",
         "jsr:@std/fs@1",
         "jsr:@std/path@1",
         "jsr:@zip-js/zip-js"
@@ -97,6 +98,7 @@
       "integrity": "9bdd4ac07cb13e7594ac30e90f6ceef7254ac83a9aeaa089be0008f33aab5cd4",
       "dependencies": [
         "jsr:@std/assert@^1.0.10",
+        "jsr:@std/async@^1.0.9",
         "jsr:@std/data-structures",
         "jsr:@std/fs@^1.0.9",
         "jsr:@std/internal",

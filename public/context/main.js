@@ -3,8 +3,8 @@ import { dom, $ } from "../../dist/index.js";
 // Perform some tests
 console.log("* Start of $ tests *\n====================\n");
 console.log($);
-console.log($.window);
-console.log($.document);
+console.log($(window));
+console.log($(document));
 console.log("\n====================\n*  End of $ tests  *");
 
 // Replace h3 with h1
@@ -13,14 +13,14 @@ dom("h3").replaceWith(
 );
 
 // Insert some content after h5
-const $h5 = $.body.find("h5");
+const $h5 = $(document.body).find("h5");
 
 $h5.after("<p><strong>i am in the body 1</strong></p>");
 $h5.after("<p><strong>i am in the body 2</strong></p>");
 $h5.after("<p><strong>i am in the body 3</strong></p>");
 
 // Append some newly created elements to the body
-$.body.append(
+$(document.body).append(
 	dom("<div>Hello World</div>")
 		.attr("data-foo", "bar")
 		.attr("data-bar", "goo")
@@ -48,4 +48,8 @@ dom(".container").after(
 );
 
 // Move the container to the bottom
-$.body.append(dom("div.container"));
+$(document.body).append(dom("div.container"));
+
+// Append something to another thing
+$("<span>i am an appended span</span>").appendTo(".container");
+$("<span>i am an prepended span</span>").prependTo(".container");

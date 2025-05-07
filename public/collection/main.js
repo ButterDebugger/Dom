@@ -8,9 +8,9 @@ for (const $ele of collection("p")) {
 	$ele.after("<p>i am a paragraph</p>");
 }
 
-$.body.prepend("<p><strong>i am in the body 1</strong></p>");
-$.body.prepend("<p><strong>i am in the body 2</strong></p>");
-$.body.prepend("<p><strong>i am in the body 3</strong></p>");
+$(document.body).prepend("<p><strong>i am in the body 1</strong></p>");
+$(document.body).prepend("<p><strong>i am in the body 2</strong></p>");
+$(document.body).prepend("<p><strong>i am in the body 3</strong></p>");
 
 // Color the paragraphs red, green, and blue based on index
 collection("p").css("color", (_, i) => {
@@ -30,8 +30,8 @@ collection("p:nth-child(odd)").replaceWith("<p>i am your replacement</p>");
 const $ogContent = collection(".container > *");
 const $dupeContainer = dom(`<div class="container">`);
 
-$.body.append("<h3>Copy</h3>");
-$.body.append($dupeContainer);
+$(document.body).append("<h3>Copy</h3>");
+$(document.body).append($dupeContainer);
 
 for (const $clonedItem of $ogContent.clone()) {
 	$dupeContainer.append($clonedItem);
@@ -41,3 +41,6 @@ for (const $clonedItem of $ogContent.clone()) {
 collection("p").forEach(($ele, index) =>
 	$ele.append(`<span> wer ${index}</span>`),
 );
+
+// Append h4, h5, and h6 to h3
+$(["<h4>right</h4>", "<h5>below</h5>", "<h6>here</h6>"]).appendTo("h3");
