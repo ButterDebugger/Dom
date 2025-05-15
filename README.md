@@ -1,7 +1,7 @@
-# Dom
+# Dough
 
-[![JSR](https://jsr.io/badges/@debutter/dom)](https://jsr.io/@debutter/dom)
-[![JSR Score](https://jsr.io/badges/@debutter/dom/score)](https://jsr.io/@debutter/dom)
+[![JSR](https://jsr.io/badges/@debutter/dough)](https://jsr.io/@debutter/dough)
+[![JSR Score](https://jsr.io/badges/@debutter/dough/score)](https://jsr.io/@debutter/dough)
 
 A lightweight and modern DOM manipulation library designed to make building web
 applications easier and more efficient
@@ -17,31 +17,31 @@ environments, you should be bundling this library into your application
 For Node.js:
 
 ```bash
-npx jsr add @debutter/dom
+npx jsr add @debutter/dough
 ```
 
 For Deno:
 
 ```bash
-deno add jsr:@debutter/dom
+deno add jsr:@debutter/dough
 ```
 
 For Bun:
 
 ```bash
-bunx jsr add @debutter/dom
+bunx jsr add @debutter/dough
 ```
 
 For Browsers:
 
 ```javascript
-import {} from "https://esm.sh/jsr/@debutter/dom@VERSION";
+import {} from "https://esm.sh/jsr/@debutter/dough@VERSION";
 ```
 
 ## Usage
 
 ```javascript
-import { $ } from "@debutter/dom";
+import { $ } from "@debutter/dough";
 
 const body = $("body");
 
