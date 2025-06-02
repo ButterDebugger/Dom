@@ -1,4 +1,4 @@
-import { dom, $ } from "../../dist/index.js";
+import { dom, $ } from "../../src/";
 
 // Perform some tests
 console.log("* Start of $ tests *\n====================\n");

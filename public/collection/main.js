@@ -1,4 +1,4 @@
-import { dom, collection, $ } from "../../dist/index.js";
+import { dom, collection, $ } from "../../src/";
 
 // Perform some tests
 collection("meta").addClass("happy one");
