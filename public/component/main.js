@@ -1,4 +1,4 @@
-import { component, DomElement, html, css } from "../../dist/index.js";
+import { component, DomElement, html, css } from "../../src/";
 
 component(
 	class extends DomElement {

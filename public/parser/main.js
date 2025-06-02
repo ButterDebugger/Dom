@@ -1,4 +1,4 @@
-import { parse, html } from "../../dist/index.js";
+import { parse, html } from "../../src/";
 
 // parsed paragraph
 document.body.appendChild(parse("<p>hello world</p>"));
