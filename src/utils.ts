@@ -27,7 +27,7 @@ export function isStringLiteral(input: string): boolean {
  * @returns Whether the input is a DomContext
  */
 export function isContext<L extends Element = Element>(
-    input: unknown
+    input: unknown,
 ): input is DomContext<L> {
     return input instanceof DomContext;
 }
@@ -38,7 +38,7 @@ export function isContext<L extends Element = Element>(
  * @returns Whether the input is a DomCollection
  */
 export function isCollection<L extends Element = Element>(
-    input: unknown
+    input: unknown,
 ): input is DomCollection<L> {
     return input instanceof DomCollection;
 }

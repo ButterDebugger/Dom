@@ -14,12 +14,12 @@ export const $$: DomGlobal = {
     },
     once(target: EventTarget, event: string, callback: EventListener): void {
         target.addEventListener(event, callback, {
-            once: true
+            once: true,
         });
     },
     off(target: EventTarget, event: string, callback: EventListener): void {
         target.removeEventListener(event, callback);
-    }
+    },
 };
 
 /**
@@ -32,7 +32,7 @@ export function $(): DomGlobal;
  * @returns A new DomContext or null if the input is invalid
  */
 export function $<L extends Element = Element>(
-    input: string
+    input: string,
 ): DomContext<L> | null;
 /**
  * Creates a new DomContext from an existing element
@@ -46,7 +46,7 @@ export function $<L extends Element = Element>(input: L): DomContext<L>;
  * @returns A new DomContext wrapping the same element
  */
 export function $<L extends Element = Element>(
-    input: DomContext<L>
+    input: DomContext<L>,
 ): DomContext<L>;
 /**
  * Creates a new DomContext from the given input
@@ -54,14 +54,16 @@ export function $<L extends Element = Element>(
  * @returns A new DomContext
  */
 export function $<L extends Element = Element>(
-    input: DomParsable
+    input: DomParsable,
 ): DomContext<L>;
 /**
  * Creates a new DomCollection from a list of items
  * @param input A list of parsable items to create the collection from
  * @returns A new DomCollection containing the parsed elements
  */
-export function $<L extends Element = Element>(input: DomParsable[]): DomCollection<L>;
+export function $<L extends Element = Element>(
+    input: DomParsable[],
+): DomCollection<L>;
 /**
  * Creates a DomLike wrapper object for the given input
  * @param input The input to wrap
@@ -74,7 +76,7 @@ export function $<L extends Element = Element>(
         | DomParsable
         | DomParsable[]
         | Window
-        | Document = undefined
+        | Document = undefined,
 ): DomGlobal | DomContext<L> | DomCollection<L> | DomLike | null {
     // Return DomGlobal
     if (typeof input === "undefined") {
@@ -96,11 +98,11 @@ export function $<L extends Element = Element>(
     return new (class implements DomLike {
         on<K extends keyof GlobalEventHandlersEventMap>(
             event: K,
-            callback: (event: GlobalEventHandlersEventMap[K]) => void
+            callback: (event: GlobalEventHandlersEventMap[K]) => void,
         ): DomLike;
         on<E extends Event>(
             event: string,
-            callback: (event: E) => void
+            callback: (event: E) => void,
         ): DomLike;
         on(event: string, callback: EventListener): DomLike {
             $$.on(input, event, callback);
@@ -109,11 +111,11 @@ export function $<L extends Element = Element>(
 
         once<K extends keyof GlobalEventHandlersEventMap>(
             event: K,
-            callback: (event: GlobalEventHandlersEventMap[K]) => void
+            callback: (event: GlobalEventHandlersEventMap[K]) => void,
         ): DomLike;
         once<E extends Event>(
             event: string,
-            callback: (event: E) => void
+            callback: (event: E) => void,
         ): DomLike;
         once(event: string, callback: EventListener): DomLike {
             $$.once(input, event, callback);
@@ -122,11 +124,11 @@ export function $<L extends Element = Element>(
 
         off<K extends keyof GlobalEventHandlersEventMap>(
             event: K,
-            callback: (event: GlobalEventHandlersEventMap[K]) => void
+            callback: (event: GlobalEventHandlersEventMap[K]) => void,
         ): DomLike;
         off<E extends Event>(
             event: string,
-            callback: (event: E) => void
+            callback: (event: E) => void,
         ): DomLike;
         off(event: string, callback: EventListener): DomLike {
             $$.off(input, event, callback);
