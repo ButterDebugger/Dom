@@ -6,7 +6,7 @@ import { isDomParsable, isHTML } from "./utils.ts";
 /**
  * Dom wrapper for a list of elements
  */
-export class DomCollection<L extends Element>
+export class DomCollection<L extends Element = Element>
 	extends Array<DomContext<L>>
 	implements DomLike
 {
@@ -26,7 +26,7 @@ export class DomCollection<L extends Element>
 	 * @param index The index of the element to retrieve
 	 * @returns The element at the given index, or null
 	 */
-	item(index: number): DomContext | null {
+	item(index: number): DomContext<L> | null {
 		return this[index] ?? null;
 	}
 
@@ -39,6 +39,35 @@ export class DomCollection<L extends Element>
 	}
 
 	/**
+	 * A collection of all children of every element
+	 */
+	children<E extends Element = Element>(): DomCollection<E> {
+		let children: DomContext<E>[] = [];
+
+		for (const $ele of this) {
+			children = children.concat($ele.children<E>());
+		}
+
+		return collection(...children);
+	}
+
+	/**
+	 * A collection of all parent elements
+	 */
+	parent<E extends Element = Element>(): DomCollection<E> | null {
+		const parents: DomContext<E>[] = [];
+
+		for (const $ele of this) {
+			const parent = $ele.parent<E>();
+			if (parent === null) continue;
+
+			parents.push(parent);
+		}
+
+		return collection(...parents);
+	}
+
+	/**
 	 * Creates a new collection of cloned elements
 	 * @param deep Whether to clone the element and all its children
 	 * @returns A new collection
@@ -47,6 +76,32 @@ export class DomCollection<L extends Element>
 		return new DomCollection(...this.map(($ele) => $ele.clone(deep)));
 	}
 
+	// @ts-ignore: This overrides the parent method correctly
+	find<K extends keyof HTMLElementTagNameMap>(
+		selector: K,
+		inclusiveScope?: boolean
+	): DomContext<HTMLElementTagNameMap[K]> | null;
+	// @ts-ignore: This overrides the parent method correctly
+	find<K extends keyof SVGElementTagNameMap>(
+		selector: K,
+		inclusiveScope?: boolean
+	): DomContext<SVGElementTagNameMap[K]> | null;
+	// @ts-ignore: This overrides the parent method correctly
+	find<K extends keyof MathMLElementTagNameMap>(
+		selector: K,
+		inclusiveScope?: boolean
+	): DomContext<MathMLElementTagNameMap[K]> | null;
+	/** @deprecated */
+	// @ts-ignore: This overrides the parent method correctly
+	find<K extends keyof HTMLElementDeprecatedTagNameMap>(
+		selector: K,
+		inclusiveScope?: boolean
+	): DomContext<HTMLElementDeprecatedTagNameMap[K]> | null;
+	// @ts-ignore: This overrides the parent method correctly
+	find<E extends Element = Element>(
+		selector: string,
+		inclusiveScope?: boolean
+	): DomContext<E> | null;
 	/**
 	 * Finds the first element within this collection of elements that matches the given selector
 	 * @param selector The selector to search for
@@ -54,9 +109,13 @@ export class DomCollection<L extends Element>
 	 * @returns A DomContext of the first matching element, or null if no elements were found
 	 */
 	// @ts-ignore: This overrides the parent method correctly
-	find(selector: string, inclusiveScope = false): DomContext | null {
+	find<E extends Element = Element>(
+		selector: string,
+		inclusiveScope = false
+	): DomContext<E> | null {
 		for (const $ele of this) {
-			const $item = $ele.find(selector, inclusiveScope);
+			const $item = $ele.find<E>(selector, inclusiveScope);
+
 			if ($item === null) continue;
 
 			return $item;
@@ -65,6 +124,23 @@ export class DomCollection<L extends Element>
 		return null;
 	}
 
+	findAll<K extends keyof HTMLElementTagNameMap>(
+		selectors: K,
+		inclusiveScope?: boolean
+	): DomCollection<HTMLElementTagNameMap[K]>;
+	findAll<K extends keyof SVGElementTagNameMap>(
+		selectors: K,
+		inclusiveScope?: boolean
+	): DomCollection<SVGElementTagNameMap[K]>;
+	findAll<K extends keyof MathMLElementTagNameMap>(
+		selectors: K,
+		inclusiveScope?: boolean
+	): DomCollection<MathMLElementTagNameMap[K]>;
+	/** @deprecated */
+	findAll<K extends keyof HTMLElementDeprecatedTagNameMap>(
+		selectors: K,
+		inclusiveScope?: boolean
+	): DomCollection<HTMLElementDeprecatedTagNameMap[K]>;
 	/**
 	 * Finds all elements within this collection of elements that matches the given selector
 	 * @param selector The selector to search for
@@ -78,7 +154,14 @@ export class DomCollection<L extends Element>
 		let items: DomContext<E>[] = [];
 
 		for (const $ele of this) {
-			items = items.concat($ele.findAll(selector, inclusiveScope));
+			const found = (
+				$ele.findAll as (
+					selector: string,
+					inclusiveScope?: boolean
+				) => DomCollection<E>
+			)(selector, inclusiveScope);
+
+			items = items.concat(found);
 		}
 
 		return collection(...items);

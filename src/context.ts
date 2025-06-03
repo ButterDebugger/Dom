@@ -24,18 +24,18 @@ export class DomContext<L extends Element = Element> implements DomLike {
 	/**
 	 * A collection of the elements children
 	 */
-	get children(): DomCollection {
+	children<E extends Element = Element>(): DomCollection<E> {
 		return collection(...this.#ele.children);
 	}
 
 	/**
 	 * The parent element
 	 */
-	get parent(): DomContext | null {
+	parent<E extends Element = Element>(): DomContext<E> | null {
 		const parent = this.#ele.parentElement;
 		if (parent === null) return null;
 
-		return dom(parent);
+		return dom<E>(parent);
 	}
 
 	/**
@@ -77,10 +77,14 @@ export class DomContext<L extends Element = Element> implements DomLike {
 	 * @param inclusiveScope Whether to include the element itself in the search
 	 * @returns A DomContext of the first matching element, or null if no elements were found
 	 */
-	find(selector: string, inclusiveScope = false): DomContext | null {
+	find<E extends Element = Element>(
+		selector: string,
+		inclusiveScope = false
+	): DomContext<E> | null {
+		// @ts-ignore: Type L is assignable to type E
 		if (inclusiveScope && this.#ele.matches(selector)) return this;
 
-		const element = this.#ele.querySelector(selector);
+		const element = this.#ele.querySelector<E>(selector);
 		if (element === null) return null;
 
 		return dom(element);
