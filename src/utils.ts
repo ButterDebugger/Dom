@@ -56,7 +56,6 @@ export function isComponent(input: unknown): input is DomElement {
 export function isDomParsable(input: unknown): input is DomParsable {
     return (
         typeof input === "string" ||
-        input instanceof HTMLElement ||
         input instanceof Element ||
         isContext(input)
     );

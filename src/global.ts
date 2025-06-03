@@ -31,25 +31,31 @@ export function $(): DomGlobal;
  * @param input An HTML string or query section
  * @returns A new DomContext or null if the input is invalid
  */
-export function $(input: string): DomContext | null;
+export function $<L extends Element = Element>(
+    input: string,
+): DomContext<L> | null;
 /**
  * Creates a new DomContext from an existing element
  * @param input The element to be wrapped
  * @returns A new DomContext
  */
-export function $(input: Element): DomContext;
+export function $<L extends Element = Element>(input: L): DomContext<L>;
 /**
  * Creates a duplicate of the given DomContext
  * @param input The DomContext to duplicate
  * @returns A new DomContext wrapping the same element
  */
-export function $(input: DomContext): DomContext;
+export function $<L extends Element = Element>(
+    input: DomContext<L>,
+): DomContext<L>;
 /**
  * Creates a new DomContext from the given input
  * @param input The input to parse
  * @returns A new DomContext
  */
-export function $(input: DomParsable): DomContext;
+export function $<L extends Element = Element>(
+    input: DomParsable,
+): DomContext<L>;
 /**
  * Creates a new DomCollection from a list of items
  * @param input A list of parsable items to create the collection from
@@ -62,14 +68,14 @@ export function $(input: DomParsable[]): DomCollection;
  * @returns A new DomLike wrapper object
  */
 export function $(input: Window | Document): DomLike;
-export function $(
+export function $<L extends Element = Element>(
     input:
         | undefined
         | DomParsable
         | DomParsable[]
         | Window
         | Document = undefined,
-): DomGlobal | DomContext | DomCollection | DomLike | null {
+): DomGlobal | DomContext<L> | DomCollection | DomLike | null {
     // Return DomGlobal
     if (typeof input === "undefined") {
         return $$;
