@@ -26,7 +26,9 @@ export function isStringLiteral(input: string): boolean {
  * @param input The input to check
  * @returns Whether the input is a DomContext
  */
-export function isContext(input: unknown): input is DomContext {
+export function isContext<L extends Element = Element>(
+    input: unknown
+): input is DomContext<L> {
     return input instanceof DomContext;
 }
 
@@ -35,7 +37,9 @@ export function isContext(input: unknown): input is DomContext {
  * @param input The input to check
  * @returns Whether the input is a DomCollection
  */
-export function isCollection(input: unknown): input is DomCollection {
+export function isCollection<L extends Element = Element>(
+    input: unknown
+): input is DomCollection<L> {
     return input instanceof DomCollection;
 }
 
@@ -56,7 +60,6 @@ export function isComponent(input: unknown): input is DomElement {
 export function isDomParsable(input: unknown): input is DomParsable {
     return (
         typeof input === "string" ||
-        input instanceof HTMLElement ||
         input instanceof Element ||
         isContext(input)
     );

@@ -3,10 +3,10 @@
  * @param input The HTML string to parse
  * @returns The parsed Element
  */
-export function parse(input: string): Element {
+export function parse<L extends Element = Element>(input: string): L {
     const temp: HTMLDivElement = document.createElement("div");
     temp.innerHTML = input;
-    return temp.children[0];
+    return temp.children[0] as L;
 }
 
 /**
@@ -37,10 +37,10 @@ export function css(
  * @param values The values of the template literal
  * @returns The parsed Element
  */
-export function html(
+export function html<L extends Element = Element>(
     strings: TemplateStringsArray,
     ...values: unknown[]
-): Element {
+): L {
     // Merge the html template string and keep track of all placeholders
     const functionPlaceholders: Record<string, unknown> = {};
     const elementPlaceholders: Record<string, Element> = {};
@@ -129,5 +129,5 @@ export function html(
     }
 
     // Return the element
-    return ele;
+    return ele as L;
 }
